@@ -1,7 +1,22 @@
+import java.util.Properties
+import java.io.File
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
 }
+
+// Load from local.properties
+val localProperties = Properties().apply {
+    val propsFile = File(rootProject.rootDir, "local.properties")
+    if (propsFile.exists()) {
+        load(propsFile.inputStream())
+    }
+}
+
+val supabaseUrl = localProperties.getProperty("SUPABASE_URL") ?: "\"MISSING_URL\""
+val supabaseAnonKey = localProperties.getProperty("SUPABASE_ANON_KEY") ?: "\"MISSING_KEY\""
+
 
 android {
     namespace = "com.bibintomj.echoscholar"
@@ -15,6 +30,10 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "SUPABASE_URL", "\"$supabaseUrl\"")
+        buildConfigField("String", "SUPABASE_ANON_KEY", "\"$supabaseAnonKey\"")
+
     }
 
     buildTypes {
@@ -35,6 +54,7 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 }
 
@@ -49,4 +69,17 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    // Supabase (auth) with BOM
+    implementation(platform("io.github.jan-tennert.supabase:bom:3.1.4"))
+    implementation("io.github.jan-tennert.supabase:auth-kt")
+
+    // ✅ Ktor 2.3.7 — this version works with Supabase 3.1.4
+    implementation("io.ktor:ktor-client-core:3.1.3")
+    implementation("io.ktor:ktor-client-okhttp:3.1.3")
+    implementation("io.ktor:ktor-client-content-negotiation:3.1.3")
+    implementation("io.ktor:ktor-serialization-kotlinx-json:3.1.3")
+    implementation("io.ktor:ktor-client-logging:3.1.3")
+
+
 }

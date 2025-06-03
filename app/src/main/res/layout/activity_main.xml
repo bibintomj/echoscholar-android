@@ -2,32 +2,184 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
+    android:background="@color/background_dark"
+    android:padding="24dp"
     tools:context=".MainActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true">
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Welcome to"
+            android:textColor="@color/text_light"
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp" />
+
+<!--        <ImageView-->
+<!--            android:layout_width="120dp"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:src="@drawable/echoscholar_logo"  &lt;!&ndash; Replace with your logo &ndash;&gt;-->
+<!--        android:contentDescription="Logo"-->
+<!--        android:layout_marginBottom="4dp" />-->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Transcribe. Translate. Summarize."
+            android:textColor="@color/text_light"
+            android:textSize="14sp"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Tabs -->
+        <LinearLayout
+            android:id="@+id/tabContainer"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/tab_inactive"
+            android:layout_marginBottom="24dp">
 
-    </com.google.android.material.appbar.AppBarLayout>
+            <TextView
+                android:id="@+id/tabLogin"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Login"
+                android:textColor="@color/text_light"
+                android:background="@color/tab_inactive"
+                android:textSize="16sp"
+                android:padding="8dp" />
 
-    <include layout="@layout/content_main" />
+            <TextView
+                android:id="@+id/tabRegister"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Register"
+                android:textColor="@color/text_light"
+                android:background="@color/tab_inactive"
+                android:textSize="16sp"
+                android:padding="8dp" />
+        </LinearLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginEnd="@dimen/fab_margin"
-        android:layout_marginBottom="16dp"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        <!-- Login Form -->
+        <LinearLayout
+            android:id="@+id/loginForm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
+            <EditText
+                android:id="@+id/emailInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Email"
+                android:inputType="textEmailAddress"
+                android:backgroundTint="@color/text_light"
+                android:textColor="@color/text_light"
+                android:textColorHint="@color/text_light"
+                android:layout_marginBottom="12dp" />
+
+            <EditText
+                android:id="@+id/passwordInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:backgroundTint="@color/text_light"
+                android:textColor="@color/text_light"
+                android:textColorHint="@color/text_light"
+                android:layout_marginBottom="12dp" />
+
+            <Button
+                android:id="@+id/loginButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Login"
+                android:backgroundTint="@color/accent"
+                android:textColor="#000000"
+                android:layout_marginBottom="16dp" />
+        </LinearLayout>
+
+        <!-- Register Form -->
+        <LinearLayout
+            android:id="@+id/registerForm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <EditText
+                android:id="@+id/fullNameInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Full Name"
+                android:inputType="textPersonName"
+                android:backgroundTint="@color/text_light"
+                android:textColor="@color/text_light"
+                android:textColorHint="@color/text_light"
+                android:layout_marginBottom="12dp" />
+
+            <EditText
+                android:id="@+id/registerEmailInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Email"
+                android:inputType="textEmailAddress"
+                android:backgroundTint="@color/text_light"
+                android:textColor="@color/text_light"
+                android:textColorHint="@color/text_light"
+                android:layout_marginBottom="12dp" />
+
+            <EditText
+                android:id="@+id/registerPasswordInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:backgroundTint="@color/text_light"
+                android:textColor="@color/text_light"
+                android:textColorHint="@color/text_light"
+                android:layout_marginBottom="12dp" />
+
+            <Button
+                android:id="@+id/registerButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Register"
+                android:backgroundTint="@color/accent"
+                android:textColor="#000000"
+                android:layout_marginBottom="16dp" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OR CONTINUE WITH"
+            android:textColor="@color/text_light"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp" />
+
+        <Button
+            android:id="@+id/googleButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Login with Google"
+            android:textColor="@color/text_light"
+            android:backgroundTint="@color/tab_inactive"
+            android:layout_marginBottom="16dp" />
+<!--            android:drawableStart="@drawable/ic_google"  &lt;!&ndash; Your Google icon &ndash;&gt;-->
+
+    </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
