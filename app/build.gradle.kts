@@ -16,6 +16,7 @@ val localProperties = Properties().apply {
 
 val supabaseUrl = localProperties.getProperty("SUPABASE_URL") ?: "\"MISSING_URL\""
 val supabaseAnonKey = localProperties.getProperty("SUPABASE_ANON_KEY") ?: "\"MISSING_KEY\""
+val googleClientId = localProperties.getProperty("GOOGLE_WEB_CLIENT_ID") ?: "\"MISSING_CLIENT_ID\""
 
 
 android {
@@ -30,7 +31,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
+        buildConfigField("String", "GOOGLE_WEB_CLIENT_ID", "\"$googleClientId\"")
         buildConfigField("String", "SUPABASE_URL", "\"$supabaseUrl\"")
         buildConfigField("String", "SUPABASE_ANON_KEY", "\"$supabaseAnonKey\"")
 
@@ -73,6 +74,9 @@ dependencies {
     // Supabase (auth) with BOM
     implementation(platform("io.github.jan-tennert.supabase:bom:3.1.4"))
     implementation("io.github.jan-tennert.supabase:auth-kt")
+    implementation("com.google.android.gms:play-services-auth:20.7.0")
+
+
 
     // ✅ Ktor 2.3.7 — this version works with Supabase 3.1.4
     implementation("io.ktor:ktor-client-core:3.1.3")
