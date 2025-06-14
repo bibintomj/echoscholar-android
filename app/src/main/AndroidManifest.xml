@@ -14,7 +14,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Echoscholarandroid"
         tools:targetApi="31">
-
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DashboardActivity"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -23,21 +28,22 @@
             <!-- This is the launcher intent -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
             <!-- 🔐 This handles the Supabase OAuth redirect -->
             <intent-filter android:label="auth">
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data
-                    android:scheme="echoscholar"
-                    android:host="auth-callback" />
+                    android:host="auth-callback"
+                    android:scheme="echoscholar" />
             </intent-filter>
-
         </activity>
-
     </application>
 
 </manifest>

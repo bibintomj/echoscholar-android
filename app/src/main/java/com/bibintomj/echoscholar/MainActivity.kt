@@ -54,6 +54,8 @@ class MainActivity : AppCompatActivity() {
                 val result = authRepository.login(email, password)
                 if (result.isSuccess) {
                     Toast.makeText(this@MainActivity, "Login successful", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this@MainActivity, DashboardActivity::class.java))
+                    finish()
                 } else {
                     Toast.makeText(this@MainActivity, "Login failed: ${result.exceptionOrNull()?.message}", Toast.LENGTH_LONG).show()
                 }
@@ -68,6 +70,8 @@ class MainActivity : AppCompatActivity() {
                 val result = authRepository.register(email, password)
                 if (result.isSuccess) {
                     Toast.makeText(this@MainActivity, "Registration successful", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this@MainActivity, DashboardActivity::class.java))
+                    finish()
                 } else {
                     Toast.makeText(this@MainActivity, "Registration failed: ${result.exceptionOrNull()?.message}", Toast.LENGTH_LONG).show()
                 }
@@ -96,6 +100,9 @@ class MainActivity : AppCompatActivity() {
                     val result = authRepository.loginWithGoogleIdToken(idToken)
                     if (result.isSuccess) {
                         Toast.makeText(this@MainActivity, "Google login successful!", Toast.LENGTH_SHORT).show()
+                        // ✅ Redirect to dashboard
+                        startActivity(Intent(this@MainActivity, DashboardActivity::class.java))
+                        finish()
                     } else {
                         Toast.makeText(this@MainActivity, "Google login failed: ${result.exceptionOrNull()?.message}", Toast.LENGTH_LONG).show()
                     }
