@@ -1,8 +1,9 @@
 package com.bibintomj.echoscholar.repository
 
+import android.util.Log
+import com.bibintomj.echoscholar.BuildConfig
 import com.bibintomj.echoscholar.SupabaseManager
 import io.github.jan.supabase.auth.auth
-import io.github.jan.supabase.auth.providers.builtin.Email
 import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
@@ -13,50 +14,61 @@ class AuthRepository {
 
     private val auth = SupabaseManager.supabase.auth
     private val client = SupabaseManager.supabase.httpClient
-    private val supabaseUrl = SupabaseManager.supabase.supabaseUrl
+    private val supabaseUrl = SupabaseManager.supabase.supabaseUrl.trimEnd('/') // ✅ no trailing slash issue
 
     suspend fun login(email: String, password: String): Result<Unit> {
         return try {
-            auth.signInWith(Email) {
+            auth.signInWith(io.github.jan.supabase.auth.providers.builtin.Email) {
                 this.email = email
                 this.password = password
             }
             Result.success(Unit)
         } catch (e: Exception) {
+            Log.e("AuthRepository", "Login error", e)
             Result.failure(e)
         }
     }
 
     suspend fun register(email: String, password: String): Result<Unit> {
         return try {
-            auth.signUpWith(Email) {
+            auth.signUpWith(io.github.jan.supabase.auth.providers.builtin.Email) {
                 this.email = email
                 this.password = password
             }
             Result.success(Unit)
         } catch (e: Exception) {
+            Log.e("AuthRepository", "Register error", e)
             Result.failure(e)
         }
     }
 
     suspend fun loginWithGoogleIdToken(idToken: String): Result<Unit> {
         return try {
-            val response: HttpResponse = client.post("$supabaseUrl/auth/v1/token?grant_type=id_token") {
+            val url = "https://$supabaseUrl/auth/v1/token?grant_type=id_token"
+            Log.d("AuthRepository", "POST URL: $url")
+
+            val response: HttpResponse = client.post(url) {
                 contentType(ContentType.Application.Json)
-                setBody(mapOf(
-                    "provider" to "google",
-                    "id_token" to idToken
-                ))
+                headers {
+                    append(HttpHeaders.Authorization, "Bearer ${BuildConfig.SUPABASE_ANON_KEY}")
+                    append("apikey", BuildConfig.SUPABASE_ANON_KEY)
+                }
+                setBody(
+                    mapOf(
+                        "provider" to "google",
+                        "id_token" to idToken
+                    )
+                )
             }
 
             if (response.status.isSuccess()) {
-                val session: SupabaseSessionResponse = response.body()
-//                auth.saveSession(session)
+                // Optionally parse session data here
                 Result.success(Unit)
             } else {
                 Result.failure(Exception("Google login failed: ${response.status}"))
             }
         } catch (e: Exception) {
+            Log.e("AuthRepository", "Google login failed", e)
             Result.failure(e)
         }
     }

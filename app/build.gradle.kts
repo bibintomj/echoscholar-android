@@ -14,9 +14,9 @@ val localProperties = Properties().apply {
     }
 }
 
-val supabaseUrl = localProperties.getProperty("SUPABASE_URL") ?: "\"MISSING_URL\""
-val supabaseAnonKey = localProperties.getProperty("SUPABASE_ANON_KEY") ?: "\"MISSING_KEY\""
-val googleClientId = localProperties.getProperty("GOOGLE_WEB_CLIENT_ID") ?: "\"MISSING_CLIENT_ID\""
+val supabaseUrl = localProperties.getProperty("SUPABASE_URL") ?: "MISSING_URL"
+val supabaseAnonKey = localProperties.getProperty("SUPABASE_ANON_KEY") ?: "MISSING_KEY"
+val googleClientId = localProperties.getProperty("GOOGLE_WEB_CLIENT_ID") ?: "MISSING_CLIENT_ID"
 
 
 android {
@@ -32,6 +32,7 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "GOOGLE_WEB_CLIENT_ID", "\"$googleClientId\"")
+//        buildConfigField("String", "SUPABASE_URL", "\"$supabaseUrl\"")
         buildConfigField("String", "SUPABASE_URL", "\"$supabaseUrl\"")
         buildConfigField("String", "SUPABASE_ANON_KEY", "\"$supabaseAnonKey\"")
 
@@ -67,6 +68,7 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
+    implementation(libs.androidx.activity)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

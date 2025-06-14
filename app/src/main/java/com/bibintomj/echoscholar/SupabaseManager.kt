@@ -1,4 +1,5 @@
 package com.bibintomj.echoscholar
+import android.util.Log
 import io.github.jan.supabase.SupabaseClient
 import io.github.jan.supabase.createSupabaseClient
 import io.github.jan.supabase.auth.Auth
@@ -13,5 +14,6 @@ object SupabaseManager {
         install(Auth) {
             // Optional config like autoLoadFromStorage = true
         }
+        Log.d("SupabaseDebug", "Using Supabase URL: ${BuildConfig.SUPABASE_URL}")
     }
 }
