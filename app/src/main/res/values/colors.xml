@@ -3,7 +3,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="accent">#D5FF15</color>
-    <color name="background_dark">#0E1218</color>
+    <color name="background_dark">#1C1F26</color>
     <color name="text_light">#ECECEC</color>
-    <color name="tab_inactive">#1C1F26</color>
+    <color name="tab_inactive">#0E1218</color>
+    <color name="primary">#BDFF00</color>
 </resources>
