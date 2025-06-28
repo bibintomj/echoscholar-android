@@ -1,10 +1,11 @@
-package com.bibintomj.echoscholar
+package com.bibintomj.echoscholar.ui.dashboard
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.bibintomj.echoscholar.R
 
 class DashboardActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

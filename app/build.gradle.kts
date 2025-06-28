@@ -80,6 +80,7 @@ dependencies {
 
 
 
+
     // ✅ Ktor 2.3.7 — this version works with Supabase 3.1.4
     implementation("io.ktor:ktor-client-core:3.1.3")
     implementation("io.ktor:ktor-client-okhttp:3.1.3")
