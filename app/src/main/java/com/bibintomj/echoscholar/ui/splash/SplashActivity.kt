@@ -1,10 +1,14 @@
-package com.bibintomj.echoscholar
+package com.bibintomj.echoscholar.ui.splash
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import com.bibintomj.echoscholar.R
+import com.bibintomj.echoscholar.SupabaseManager
+import com.bibintomj.echoscholar.ui.auth.MainActivity
+import com.bibintomj.echoscholar.ui.dashboard.DashboardActivity
 import io.github.jan.supabase.auth.auth
 
 class SplashActivity : AppCompatActivity() {
