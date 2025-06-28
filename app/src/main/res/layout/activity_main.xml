@@ -43,7 +43,7 @@
                 android:textSize="14sp"
                 android:layout_marginBottom="24dp" />
 
-            <!-- Tabs -->
+            <!-- Tab Buttons -->
             <LinearLayout
                 android:id="@+id/tabContainer"
                 android:layout_width="match_parent"
@@ -77,71 +77,145 @@
                     android:textSize="16sp" />
             </LinearLayout>
 
-            <!-- Login Form -->
-            <LinearLayout
-                android:id="@+id/loginForm"
+            <!-- Form Container -->
+            <FrameLayout
+                android:id="@+id/formContainer"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="wrap_content">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Email"
-                    android:textColor="@color/text_light"
-                    android:layout_marginBottom="4dp" />
-
-                <EditText
-                    android:id="@+id/emailInput"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginBottom="16dp"
-                    android:background="@drawable/glass_effect_background"
-                    android:hint="Enter Your Email"
-                    android:padding="12dp"
-                    android:inputType="textEmailAddress"
-                    android:textColor="@color/text_light"
-                    android:textColorHint="@color/text_light" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Password"
-                    android:textColor="@color/text_light"
-                    android:layout_marginBottom="4dp" />
-
-                <EditText
-                    android:id="@+id/passwordInput"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginBottom="24dp"
-                    android:background="@drawable/glass_effect_background"
-                    android:hint="Enter You Password"
-                    android:padding="12dp"
-                    android:inputType="textPassword"
-                    android:textColor="@color/text_light"
-                    android:textColorHint="@color/text_light" />
-
-                <Button
-                    android:id="@+id/loginButton"
+                <!-- Login Form -->
+                <LinearLayout
+                    android:id="@+id/loginForm"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Login"
-                    android:backgroundTint="@color/primary"
-                    android:textColor="@color/black"
-                    android:layout_marginBottom="24dp" />
-            </LinearLayout>
+                    android:orientation="vertical"
+                    android:visibility="visible"
+                    android:animationCache="false">
 
-            <!-- Register Form -->
-            <LinearLayout
-                android:id="@+id/registerForm"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="gone">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Email"
+                        android:textColor="@color/text_light"
+                        android:layout_marginBottom="4dp" />
 
-                <!-- Similar structure like loginForm -->
-            </LinearLayout>
+                    <EditText
+                        android:id="@+id/emailInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginBottom="16dp"
+                        android:background="@drawable/glass_effect_background"
+                        android:hint="Enter Your Email"
+                        android:padding="12dp"
+                        android:inputType="textEmailAddress"
+                        android:textColor="@color/text_light"
+                        android:textColorHint="@color/text_light" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Password"
+                        android:textColor="@color/text_light"
+                        android:layout_marginBottom="4dp" />
+
+                    <EditText
+                        android:id="@+id/passwordInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginBottom="24dp"
+                        android:background="@drawable/glass_effect_background"
+                        android:hint="Enter Your Password"
+                        android:padding="12dp"
+                        android:inputType="textPassword"
+                        android:textColor="@color/text_light"
+                        android:textColorHint="@color/text_light" />
+
+                    <Button
+                        android:id="@+id/loginButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Login"
+                        android:backgroundTint="@color/primary"
+                        android:textColor="@color/black"
+                        android:layout_marginBottom="24dp" />
+                </LinearLayout>
+
+                <!-- Register Form -->
+                <LinearLayout
+                    android:id="@+id/registerForm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    android:animationCache="false">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Email"
+                        android:textColor="@color/text_light"
+                        android:layout_marginBottom="4dp" />
+
+                    <EditText
+                        android:id="@+id/emailRegisterInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginBottom="16dp"
+                        android:background="@drawable/glass_effect_background"
+                        android:hint="Enter Your Email"
+                        android:padding="12dp"
+                        android:inputType="textEmailAddress"
+                        android:textColor="@color/text_light"
+                        android:textColorHint="@color/text_light" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Password"
+                        android:textColor="@color/text_light"
+                        android:layout_marginBottom="4dp" />
+
+                    <EditText
+                        android:id="@+id/passwordRegisterInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginBottom="16dp"
+                        android:background="@drawable/glass_effect_background"
+                        android:hint="Enter Your Password"
+                        android:padding="12dp"
+                        android:inputType="textPassword"
+                        android:textColor="@color/text_light"
+                        android:textColorHint="@color/text_light" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Repeat Password"
+                        android:textColor="@color/text_light"
+                        android:layout_marginBottom="4dp" />
+
+                    <EditText
+                        android:id="@+id/repeatpasswordInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginBottom="24dp"
+                        android:background="@drawable/glass_effect_background"
+                        android:hint="Confirm Your Password"
+                        android:padding="12dp"
+                        android:inputType="textPassword"
+                        android:textColor="@color/text_light"
+                        android:textColorHint="@color/text_light" />
+
+                    <Button
+                        android:id="@+id/registerButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Register"
+                        android:backgroundTint="@color/primary"
+                        android:textColor="@color/black"
+                        android:layout_marginBottom="24dp" />
+                </LinearLayout>
+            </FrameLayout>
 
             <TextView
                 android:layout_width="wrap_content"

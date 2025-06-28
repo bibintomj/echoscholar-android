@@ -8,13 +8,14 @@ import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
+import io.github.jan.supabase.auth.providers.builtin.Email
 import kotlinx.serialization.Serializable
 
 class AuthRepository {
 
     private val auth = SupabaseManager.supabase.auth
     private val client = SupabaseManager.supabase.httpClient
-    private val supabaseUrl = SupabaseManager.supabase.supabaseUrl.trimEnd('/') // ✅ no trailing slash issue
+    private val supabaseUrl = SupabaseManager.supabase.supabaseUrl.trimEnd('/')
 
     suspend fun login(email: String, password: String): Result<Unit> {
         return try {
@@ -31,7 +32,7 @@ class AuthRepository {
 
     suspend fun register(email: String, password: String): Result<Unit> {
         return try {
-            auth.signUpWith(io.github.jan.supabase.auth.providers.builtin.Email) {
+            auth.signUpWith(Email) {
                 this.email = email
                 this.password = password
             }
@@ -45,8 +46,6 @@ class AuthRepository {
     suspend fun loginWithGoogleIdToken(idToken: String): Result<Unit> {
         return try {
             val url = "https://$supabaseUrl/auth/v1/token?grant_type=id_token"
-            Log.d("AuthRepository", "POST URL: $url")
-
             val response: HttpResponse = client.post(url) {
                 contentType(ContentType.Application.Json)
                 headers {
@@ -61,8 +60,10 @@ class AuthRepository {
                 )
             }
 
+            val sessionText = response.bodyAsText()
+            Log.d("GoogleSession", sessionText)
+
             if (response.status.isSuccess()) {
-                // Optionally parse session data here
                 Result.success(Unit)
             } else {
                 Result.failure(Exception("Google login failed: ${response.status}"))
