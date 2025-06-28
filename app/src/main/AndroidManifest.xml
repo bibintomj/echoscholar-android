@@ -14,9 +14,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Echoscholarandroid"
         tools:targetApi="31">
+
         <activity
-            android:name=".LoginActivity"
+            android:name=".RegistrationActivity"
             android:exported="false" />
+        <activity
+            android:name=".SplashActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".DashboardActivity"
             android:exported="false" />
@@ -25,14 +35,7 @@
             android:exported="true"
             android:theme="@style/Theme.Echoscholarandroid">
 
-            <!-- This is the launcher intent -->
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
-            <!-- 🔐 This handles the Supabase OAuth redirect -->
+            <!-- OAuth redirect for Supabase -->
             <intent-filter android:label="auth">
                 <action android:name="android.intent.action.VIEW" />
 

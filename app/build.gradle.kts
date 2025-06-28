@@ -16,7 +16,7 @@ val localProperties = Properties().apply {
 
 val supabaseUrl = localProperties.getProperty("SUPABASE_URL") ?: "MISSING_URL"
 val supabaseAnonKey = localProperties.getProperty("SUPABASE_ANON_KEY") ?: "MISSING_KEY"
-val googleClientId = localProperties.getProperty("GOOGLE_WEB_CLIENT_ID") ?: "MISSING_CLIENT_ID"
+val googleClientId = localProperties.getProperty("GOOGLE_ANDROID_CLIENT_ID") ?: "MISSING_CLIENT_ID"
 
 
 android {
@@ -31,7 +31,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "GOOGLE_WEB_CLIENT_ID", "\"$googleClientId\"")
+        buildConfigField("String", "GOOGLE_ANDROID_CLIENT_ID", "\"$googleClientId\"")
 //        buildConfigField("String", "SUPABASE_URL", "\"$supabaseUrl\"")
         buildConfigField("String", "SUPABASE_URL", "\"$supabaseUrl\"")
         buildConfigField("String", "SUPABASE_ANON_KEY", "\"$supabaseAnonKey\"")
