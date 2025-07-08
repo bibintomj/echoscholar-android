@@ -4,6 +4,9 @@ import java.io.File
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.serialization)
+    id("org.jetbrains.kotlin.kapt")
+
 }
 
 // Load from local.properties
@@ -73,8 +76,13 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+    kapt("com.github.bumptech.glide:compiler:4.16.0")
+
     // Supabase (auth) with BOM
     implementation(platform("io.github.jan-tennert.supabase:bom:3.1.4"))
+//    implementation(platform("io.github.jan-tennert.supabase:bom:3.2.0"))
+
     implementation("io.github.jan-tennert.supabase:auth-kt")
     implementation("com.google.android.gms:play-services-auth:20.7.0")
 
@@ -87,6 +95,7 @@ dependencies {
     implementation("io.ktor:ktor-client-content-negotiation:3.1.3")
     implementation("io.ktor:ktor-serialization-kotlinx-json:3.1.3")
     implementation("io.ktor:ktor-client-logging:3.1.3")
-
+    implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.5.0")
+    implementation("io.github.jan-tennert.supabase:postgrest-kt:3.1.4")
 
 }
