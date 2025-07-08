@@ -62,15 +62,21 @@ class AuthViewModel(private val auth: Auth) : ViewModel() {
     // ✅ Private method for OAuth
     private suspend fun loginWithGoogleOAuthInternal() {
         try {
-            auth.signInWith<ExternalAuthConfig, Unit, Google>(
-                provider = Google
-            )  // <-- Fixed here
+            auth.signInWith<ExternalAuthConfig, Unit, Google>(provider = Google)
+
             val session = auth.currentSessionOrNull()
-            _loginState.value = session?.let { Result.success(it) }
-                ?: Result.failure(Exception("OAuth login succeeded but session is null"))
+            val user = auth.currentUserOrNull()
+
+            Log.d("SUPABASE", "Metadata: ${user?.userMetadata}")
+
+            // ✅ Send name and avatar if available
+            val name = user?.userMetadata?.get("name") as? String
+            val avatarUrl = user?.userMetadata?.get("avatar_url") as? String
+
         } catch (e: Exception) {
             Log.e("OAuthLoginError", "Failed to login with Google OAuth", e)
             _loginState.value = Result.failure(e)
         }
     }
+
 }

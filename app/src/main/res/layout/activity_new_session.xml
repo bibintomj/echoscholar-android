@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    android:padding="16dp">
+
+    <!-- Back + Title -->
+    <TextView
+        android:id="@+id/topTitle"
+        android:layout_width="317dp"
+        android:layout_height="24dp"
+        android:text="New Session"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/backButton"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/arrow_back"
+        android:tint="#D0FF00"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/topTitle"
+        app:layout_constraintBottom_toBottomOf="@id/topTitle"
+        android:layout_marginEnd="8dp" />
+
+    <!-- Status -->
+    <TextView
+        android:id="@+id/statusText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="● Ready"
+        android:textColor="#AAAAAA"
+        android:textSize="14sp"
+        app:layout_constraintTop_toBottomOf="@id/topTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp" />
+
+    <!-- Transcription Header -->
+    <TextView
+        android:id="@+id/transcriptionLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Transcription"
+        android:textSize="16sp"
+        android:textColor="#AAAAAA"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/statusText"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="24dp" />
+
+    <!-- Transcription Text -->
+    <TextView
+        android:id="@+id/transcriptionText"
+        android:layout_width="383dp"
+        android:layout_height="208dp"
+        android:layout_marginTop="8dp"
+        android:lineSpacingExtra="4dp"
+        android:text="Start recording to see transcription..."
+        android:textColor="#666666"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/transcriptionLabel" />
+
+    <!-- Translation Label -->
+    <TextView
+        android:id="@+id/translationLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Translation"
+        android:textSize="16sp"
+        android:textColor="#AAAAAA"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/transcriptionText"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="24dp" />
+
+    <!-- Translation Language Dropdown -->
+    <TextView
+        android:id="@+id/translationLanguage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Spanish ⌄"
+        android:textColor="#D0FF00"
+        android:textSize="14sp"
+        app:layout_constraintTop_toTopOf="@id/translationLabel"
+        app:layout_constraintBottom_toBottomOf="@id/translationLabel"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Translation Text -->
+    <TextView
+        android:id="@+id/translationText"
+        android:layout_width="368dp"
+        android:layout_height="234dp"
+        android:layout_marginTop="8dp"
+        android:lineSpacingExtra="4dp"
+        android:text="Translation will appear here..."
+        android:textColor="#666666"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/translationLabel" />
+
+    <!-- Start Recording Button -->
+    <Button
+        android:id="@+id/startRecordingButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Start Recording"
+        android:textColor="#000000"
+        android:drawableLeft="@android:drawable/ic_btn_speak_now"
+        android:drawablePadding="8dp"
+        android:backgroundTint="#D0FF00"
+        android:textAllCaps="false"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
