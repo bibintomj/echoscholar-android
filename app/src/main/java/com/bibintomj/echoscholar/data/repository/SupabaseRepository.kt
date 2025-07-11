@@ -22,7 +22,7 @@ object SupabaseRepository {
                 ?: return@withContext Result.failure(Exception("No access token"))
 
             val request = Request.Builder()
-                .url("http://10.192.187.3:3000/api/session") // Emulator -> localhost
+                .url("http://10.5.0.2:3000/api/session") // Emulator -> localhost
                 .addHeader("Authorization", "Bearer $token")
                 .build()
 
