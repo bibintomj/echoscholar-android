@@ -2,6 +2,7 @@ package com.bibintomj.echoscholar.ui.dashboard
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.PopupMenu
 import android.widget.Toast
@@ -10,18 +11,40 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bibintomj.echoscholar.SupabaseManager
+import com.bibintomj.echoscholar.data.model.SessionAPIModel
 import com.bibintomj.echoscholar.data.model.SessionItem
 import com.bibintomj.echoscholar.databinding.ActivityDashboardBinding
 import com.bibintomj.echoscholar.ui.auth.MainActivity
+import com.bibintomj.echoscholar.ui.sessiondetail.SessionDetailActivity
 import io.github.jan.supabase.auth.auth
 import kotlinx.coroutines.launch
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 class DashboardActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDashboardBinding
     private val viewModel: DashboardViewModel by viewModels()
-    private val adapter = SessionAdapter { session ->
-        Toast.makeText(this, "Clicked: ${session.id}", Toast.LENGTH_SHORT).show()
+    private var fullSessionList: List<SessionAPIModel> = emptyList()
+
+    private val adapter = SessionAdapter { sessionId ->
+        val selectedSession = fullSessionList.find { it.id == sessionId }
+
+        if (selectedSession != null) {
+            val json = kotlinx.serialization.json.Json.encodeToString(
+                serializer = SessionAPIModel.serializer(),
+                value = selectedSession
+            )
+
+            Log.d("DashboardActivity", "Session JSON = $json")
+
+
+            val intent = Intent(this, SessionDetailActivity::class.java)
+            intent.putExtra("session_json", json)
+            startActivity(intent)
+        } else {
+            Toast.makeText(this, "Session not found", Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,6 +61,8 @@ class DashboardActivity : AppCompatActivity() {
 
         viewModel.sessions.observe(this) { sessions ->
             binding.progressBar.visibility = View.GONE
+
+            fullSessionList = sessions
 
             val items = sessions.map {
                 val title = it.transcriptions?.firstOrNull()?.content
@@ -76,11 +101,11 @@ class DashboardActivity : AppCompatActivity() {
             }
             popupMenu.show()
         }
+
         binding.newSessionButton.setOnClickListener {
             val intent = Intent(this, NewSessionActivity::class.java)
             startActivity(intent)
         }
-
     }
 
     private fun performLogout() {
@@ -97,5 +122,4 @@ class DashboardActivity : AppCompatActivity() {
             }
         }
     }
-
 }

@@ -13,7 +13,7 @@ import java.util.Locale
 import java.util.concurrent.TimeUnit
 
 class SessionAdapter(
-    private val onSessionClick: (SessionItem) -> Unit
+    private val onSessionClick: (String) -> Unit // Updated to take session ID
 ) : ListAdapter<SessionItem, SessionAdapter.ViewHolder>(DiffCallback()) {
 
     inner class ViewHolder(private val binding: ItemSessionBinding) :
@@ -24,7 +24,7 @@ class SessionAdapter(
             binding.sessionTime.text = session.getTimeAgo()
 
             binding.playIcon.setOnClickListener {
-                onSessionClick(session)
+                onSessionClick(session.id) // Pass only session ID
             }
         }
     }
@@ -49,6 +49,7 @@ class SessionAdapter(
     }
 }
 
+// Helper extension to format session time
 fun SessionItem.getTimeAgo(): String {
     val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
     return try {
