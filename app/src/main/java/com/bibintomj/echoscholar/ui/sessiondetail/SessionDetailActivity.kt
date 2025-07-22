@@ -8,10 +8,19 @@ import android.util.Log
 import android.widget.SeekBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.bibintomj.echoscholar.SupabaseManager
 import com.bibintomj.echoscholar.data.model.SessionAPIModel
 import com.bibintomj.echoscholar.databinding.ActivitySessionDetailBinding
+import io.github.jan.supabase.auth.auth
+import io.github.jan.supabase.auth.createDefaultSessionManager
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.jsonPrimitive
+import okhttp3.*
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.RequestBody.Companion.toRequestBody
+import java.io.IOException
 
 class SessionDetailActivity : AppCompatActivity() {
 
@@ -69,6 +78,12 @@ class SessionDetailActivity : AppCompatActivity() {
                 isSeeking = false
             }
         })
+
+        binding.generateMomButton.setOnClickListener {
+            session?.let {
+                generateMoM(it.id)
+            }
+        }
     }
 
     private fun displaySessionDetails(session: SessionAPIModel) {
@@ -155,6 +170,52 @@ class SessionDetailActivity : AppCompatActivity() {
         val mins = totalSecs / 60
         val secs = totalSecs % 60
         return String.format("%d:%02d", mins, secs)
+    }
+
+    private fun generateMoM(sessionId: String) {
+        val accessToken = SupabaseManager.supabase.auth.currentAccessTokenOrNull()
+
+        if (accessToken == null) {
+            Toast.makeText(this, "Not authenticated", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val apiUrl = "http://192.168.2.32:3000/api/mom" // 🔁 Replace with your real API URL
+
+        val jsonBody = """{"session_id": "$sessionId"}"""
+        val mediaType = "application/json".toMediaType()
+
+        val request = Request.Builder()
+            .url(apiUrl)
+            .addHeader("Authorization", "Bearer $accessToken")
+            .addHeader("Content-Type", "application/json")
+            .post(jsonBody.toRequestBody(mediaType))
+            .build()
+
+        OkHttpClient().newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                runOnUiThread {
+                    Toast.makeText(this@SessionDetailActivity, "Failed to fetch MoM", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                val body = response.body?.string()
+                runOnUiThread {
+                    if (!response.isSuccessful || body == null) {
+                        Toast.makeText(this@SessionDetailActivity, "Error: ${response.code}", Toast.LENGTH_SHORT).show()
+                    } else {
+                        try {
+                            val json = Json.parseToJsonElement(body).jsonObject
+                            val mom = json["mom"]?.jsonPrimitive?.content ?: "No MoM found"
+                            binding.momText.text = mom
+                        } catch (e: Exception) {
+                            binding.momText.text = "Error parsing MoM"
+                        }
+                    }
+                }
+            }
+        })
     }
 
     override fun onDestroy() {
