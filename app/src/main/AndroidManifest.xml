@@ -31,6 +31,9 @@
             android:name=".ui.dashboard.DashboardActivity"
             android:exported="false" />
         <activity android:name=".ui.dashboard.NewSessionActivity" />
+
+        <activity android:name=".ui.sessiondetail.SessionDetailActivity" />
+
         <activity
             android:name=".ui.auth.MainActivity"
             android:exported="true"

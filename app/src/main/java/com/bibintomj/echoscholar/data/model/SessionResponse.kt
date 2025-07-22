@@ -9,7 +9,7 @@ data class SessionResponse(val sessions: List<SessionAPIModel>)
 @Serializable
 data class SessionAPIModel(
     val id: String,
-    val created_on: String,
+    val created_on: String = "",
     val user_id: String?,
     val target_language: String?,
     val audio_file_path: String?,
