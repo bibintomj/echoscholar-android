@@ -1,5 +1,6 @@
 package com.bibintomj.echoscholar.ui.sessiondetail
 
+import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
@@ -8,18 +9,25 @@ import android.util.Log
 import android.widget.SeekBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
+import com.bibintomj.echoscholar.BuildConfig
 import com.bibintomj.echoscholar.SupabaseManager
 import com.bibintomj.echoscholar.data.model.SessionAPIModel
+import com.bibintomj.echoscholar.data.repository.SupabaseRepository
 import com.bibintomj.echoscholar.databinding.ActivitySessionDetailBinding
+import com.bibintomj.echoscholar.ui.chat.ChatActivity
 import io.github.jan.supabase.auth.auth
-import io.github.jan.supabase.auth.createDefaultSessionManager
-import kotlinx.serialization.decodeFromString
+import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
-import okhttp3.*
+import okhttp3.Call
+import okhttp3.Callback
 import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.OkHttpClient
+import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.Response
 import java.io.IOException
 
 class SessionDetailActivity : AppCompatActivity() {
@@ -29,9 +37,10 @@ class SessionDetailActivity : AppCompatActivity() {
     private var isAudioPlaying = false
     private var isSeeking = false
     private lateinit var updateSeekRunnable: Runnable
-
     private val handler = Handler(Looper.getMainLooper())
+
     private var session: SessionAPIModel? = null
+    private val http by lazy { OkHttpClient() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,26 +50,22 @@ class SessionDetailActivity : AppCompatActivity() {
         val json = intent.getStringExtra("session_json")
         Log.d("SessionDetail", "Incoming JSON: $json")
 
-        if (json == null) {
+        if (json.isNullOrBlank()) {
             Toast.makeText(this, "Missing session data", Toast.LENGTH_SHORT).show()
-            finish()
-            return
+            finish(); return
         }
 
         try {
-            session = Json.decodeFromString<SessionAPIModel>(json)
+            session = Json.decodeFromString(SessionAPIModel.serializer(), json)
         } catch (e: Exception) {
             Log.e("SessionDetail", "Failed to parse JSON", e)
             Toast.makeText(this, "Invalid session data", Toast.LENGTH_SHORT).show()
-            finish()
-            return
+            finish(); return
         }
 
         session?.let { displaySessionDetails(it) }
 
-        binding.backButton.setOnClickListener {
-            finish()
-        }
+        binding.backButton.setOnClickListener { finish() }
 
         binding.audioSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
@@ -69,46 +74,70 @@ class SessionDetailActivity : AppCompatActivity() {
                     binding.currentTime.text = formatTime(progress)
                 }
             }
-
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {
-                isSeeking = true
-            }
-
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                isSeeking = false
-            }
+            override fun onStartTrackingTouch(seekBar: SeekBar?) { isSeeking = true }
+            override fun onStopTrackingTouch(seekBar: SeekBar?) { isSeeking = false }
         })
 
         binding.generateMomButton.setOnClickListener {
-            session?.let {
-                generateMoM(it.id)
+            session?.id?.let { generateMoM(it) }
+        }
+
+        // ✅ Open Chat with session context (Pro-only)
+        binding.chatButton.setOnClickListener {
+            val user = SupabaseManager.supabase.auth.currentUserOrNull()
+            if (user == null) {
+                Toast.makeText(this, "Please log in first.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            val sessionId = session?.id
+            if (sessionId.isNullOrBlank()) {
+                Toast.makeText(this, "Session ID not available", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            lifecycleScope.launch {
+                val isPro = try {
+                    SupabaseRepository.isUserPro(user.id)
+                } catch (e: Exception) {
+                    Log.e("SessionDetail", "Pro check failed", e)
+                    false
+                }
+
+                if (!isPro) {
+                    Toast.makeText(this@SessionDetailActivity, "Upgrade to Pro to use Chat", Toast.LENGTH_SHORT).show()
+                    return@launch
+                }
+
+                val intent = Intent(this@SessionDetailActivity, ChatActivity::class.java)
+                    .putExtra("session_id", sessionId)
+                startActivity(intent)
             }
         }
     }
 
     private fun displaySessionDetails(session: SessionAPIModel) {
         binding.sessionTitle.text = session.transcriptions?.firstOrNull()?.content
-            ?.lineSequence()?.firstOrNull()?.trim() ?: "Untitled"
+            ?.lineSequence()?.firstOrNull()?.trim().orEmpty().ifBlank { "Untitled" }
 
-        binding.transcriptionText.text = session.transcriptions?.joinToString("\n\n") { it.content }
-            ?: "No transcriptions"
+        binding.transcriptionText.text =
+            session.transcriptions?.joinToString("\n\n") { it.content }.orEmpty()
+                .ifBlank { "No transcriptions" }
 
-        binding.translationText.text = session.translations?.joinToString("\n\n") { it.content }
-            ?: "No translations"
+        binding.translationText.text =
+            session.translations?.joinToString("\n\n") { it.content }.orEmpty()
+                .ifBlank { "No translations" }
 
-        binding.summaryText.text = session.summaries?.joinToString("\n\n") { it.content }
-            ?: "No summaries"
+        binding.summaryText.text =
+            session.summaries?.joinToString("\n\n") { it.content }.orEmpty()
+                .ifBlank { "No summaries" }
 
         binding.playAudioButton.setOnClickListener {
-            Log.d("SessionDetail", "Audio URL = ${session.audio_signed_url}")
-            if (session.audio_signed_url != null) {
-                if (!isAudioPlaying) {
-                    playAudio(session.audio_signed_url)
-                } else {
-                    pauseAudio()
-                }
-            } else {
+            val url = session.audio_signed_url
+            Log.d("SessionDetail", "Audio URL = $url")
+            if (url.isNullOrBlank()) {
                 Toast.makeText(this, "No audio available", Toast.LENGTH_SHORT).show()
+            } else {
+                if (!isAudioPlaying) playAudio(url) else pauseAudio()
             }
         }
     }
@@ -117,7 +146,6 @@ class SessionDetailActivity : AppCompatActivity() {
         mediaPlayer?.release()
         mediaPlayer = MediaPlayer().apply {
             setDataSource(url)
-            prepareAsync()
             setOnPreparedListener {
                 it.start()
                 isAudioPlaying = true
@@ -140,6 +168,7 @@ class SessionDetailActivity : AppCompatActivity() {
                 Toast.makeText(this@SessionDetailActivity, "Error playing audio", Toast.LENGTH_SHORT).show()
                 false
             }
+            prepareAsync()
         }
     }
 
@@ -172,17 +201,22 @@ class SessionDetailActivity : AppCompatActivity() {
         return String.format("%d:%02d", mins, secs)
     }
 
+    private fun joinUrl(base: String, path: String): String {
+        val b = base.trimEnd('/')
+        val p = path.trimStart('/')
+        return "$b/$p"
+    }
+
     private fun generateMoM(sessionId: String) {
         val accessToken = SupabaseManager.supabase.auth.currentAccessTokenOrNull()
-
-        if (accessToken == null) {
+        if (accessToken.isNullOrBlank()) {
             Toast.makeText(this, "Not authenticated", Toast.LENGTH_SHORT).show()
             return
         }
 
-        val apiUrl = "http://192.168.2.32:3000/api/mom" // 🔁 Replace with your real API URL
+        val apiUrl = joinUrl(BuildConfig.API_BASE_URL, "api/mom") // ✅ robust join
 
-        val jsonBody = """{"session_id": "$sessionId"}"""
+        val jsonBody = """{"session_id":"$sessionId"}"""
         val mediaType = "application/json".toMediaType()
 
         val request = Request.Builder()
@@ -192,24 +226,23 @@ class SessionDetailActivity : AppCompatActivity() {
             .post(jsonBody.toRequestBody(mediaType))
             .build()
 
-        OkHttpClient().newCall(request).enqueue(object : Callback {
+        http.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 runOnUiThread {
                     Toast.makeText(this@SessionDetailActivity, "Failed to fetch MoM", Toast.LENGTH_SHORT).show()
                 }
             }
-
             override fun onResponse(call: Call, response: Response) {
                 val body = response.body?.string()
                 runOnUiThread {
-                    if (!response.isSuccessful || body == null) {
+                    if (!response.isSuccessful || body.isNullOrBlank()) {
                         Toast.makeText(this@SessionDetailActivity, "Error: ${response.code}", Toast.LENGTH_SHORT).show()
                     } else {
                         try {
-                            val json = Json.parseToJsonElement(body).jsonObject
-                            val mom = json["mom"]?.jsonPrimitive?.content ?: "No MoM found"
+                            val mom = Json.parseToJsonElement(body).jsonObject["mom"]?.jsonPrimitive?.content
+                                ?: "No MoM found"
                             binding.momText.text = mom
-                        } catch (e: Exception) {
+                        } catch (_: Exception) {
                             binding.momText.text = "Error parsing MoM"
                         }
                     }
@@ -217,6 +250,7 @@ class SessionDetailActivity : AppCompatActivity() {
             }
         })
     }
+
 
     override fun onDestroy() {
         super.onDestroy()

@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_dark"
-    android:padding="24dp"
     tools:context=".ui.auth.MainActivity">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        android:padding="24dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -20,49 +20,52 @@
             android:gravity="center_horizontal"
             android:paddingTop="48dp">
 
+            <!-- Welcome Text -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Welcome to"
                 android:textColor="@color/text_light"
                 android:textSize="16sp"
-                android:layout_marginBottom="12dp" />
+                android:layout_marginBottom="8dp" />
 
+            <!-- Logo -->
             <ImageView
-                android:layout_width="266dp"
-                android:layout_height="81dp"
-                android:layout_marginBottom="12dp"
+                android:layout_width="260dp"
+                android:layout_height="80dp"
+                android:layout_marginBottom="8dp"
                 android:contentDescription="EchoScholar logo"
                 android:src="@drawable/echoscholar_logo" />
 
+            <!-- Subtitle -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Transcribe. Translate. Summarize."
+                android:text="Transcribe   •   Translate   •   Summarize"
                 android:textColor="@color/text_light"
                 android:textSize="14sp"
-                android:layout_marginBottom="24dp" />
+                android:layout_marginBottom="32dp" />
 
-            <!-- Tab Buttons -->
+            <!-- Tab Selector -->
             <LinearLayout
                 android:id="@+id/tabContainer"
                 android:layout_width="match_parent"
-                android:layout_height="47dp"
+                android:layout_height="48dp"
                 android:layout_marginBottom="24dp"
-                android:background="@color/tab_inactive"
-                android:gravity="center"
+                android:background="@drawable/tab_background"
                 android:orientation="horizontal"
-                android:padding="4dp">
+                android:padding="4dp"
+                android:gravity="center">
 
                 <TextView
                     android:id="@+id/tabLogin"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/glass_effect_background"
+                    android:background="@drawable/tab_active_background"
                     android:gravity="center"
                     android:text="Login"
-                    android:textColor="@color/text_light"
+                    android:textColor="@color/black"
                     android:textSize="16sp" />
 
                 <TextView
@@ -70,7 +73,6 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@android:color/transparent"
                     android:gravity="center"
                     android:text="Register"
                     android:textColor="@color/text_light"
@@ -88,9 +90,7 @@
                     android:id="@+id/loginForm"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:visibility="visible"
-                    android:animationCache="false">
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -133,11 +133,13 @@
                     <Button
                         android:id="@+id/loginButton"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="50dp"
                         android:text="Login"
                         android:backgroundTint="@color/primary"
                         android:textColor="@color/black"
-                        android:layout_marginBottom="24dp" />
+                        android:textAllCaps="false"
+                        android:layout_marginBottom="24dp"
+                        android:fontFamily="@font/sf_pro_medium"/>
                 </LinearLayout>
 
                 <!-- Register Form -->
@@ -146,8 +148,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:visibility="gone"
-                    android:animationCache="false">
+                    android:visibility="gone"> <!-- hidden initially -->
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -157,7 +158,7 @@
                         android:layout_marginBottom="4dp" />
 
                     <EditText
-                        android:id="@+id/emailRegisterInput"
+                        android:id="@+id/registerEmailInput"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_marginBottom="16dp"
@@ -176,10 +177,10 @@
                         android:layout_marginBottom="4dp" />
 
                     <EditText
-                        android:id="@+id/passwordRegisterInput"
+                        android:id="@+id/registerPasswordInput"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:layout_marginBottom="16dp"
+                        android:layout_marginBottom="24dp"
                         android:background="@drawable/glass_effect_background"
                         android:hint="Enter Your Password"
                         android:padding="12dp"
@@ -200,7 +201,7 @@
                         android:layout_height="50dp"
                         android:layout_marginBottom="24dp"
                         android:background="@drawable/glass_effect_background"
-                        android:hint="Confirm Your Password"
+                        android:hint="Enter Your Password"
                         android:padding="12dp"
                         android:inputType="textPassword"
                         android:textColor="@color/text_light"
@@ -209,29 +210,52 @@
                     <Button
                         android:id="@+id/registerButton"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="50dp"
                         android:text="Register"
                         android:backgroundTint="@color/primary"
                         android:textColor="@color/black"
-                        android:layout_marginBottom="24dp" />
+                        android:textAllCaps="false"
+                        android:fontFamily="@font/sf_pro_medium"/>
                 </LinearLayout>
+
             </FrameLayout>
 
+            <!-- Divider -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="OR CONTINUE WITH"
                 android:textColor="@color/text_light"
-                android:layout_marginBottom="8dp" />
+                android:textSize="12sp"
+                android:layout_marginBottom="12dp" />
 
-            <Button
+            <!-- Google Button -->
+            <LinearLayout
                 android:id="@+id/googleButton"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/glass_effect_background"
-                android:text="Login with Google"
-                android:textColor="@color/text_light" />
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:background="@drawable/google_button_background"
+                android:paddingHorizontal="16dp"
+                android:layout_marginBottom="24dp"
+                android:clickable="true"
+                android:focusable="true">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_google" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Login with Google"
+                    android:textColor="@color/text_light"
+                    android:textSize="14sp"
+                    android:layout_marginStart="12dp"
+                    android:fontFamily="@font/sf_pro_regular"/>
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

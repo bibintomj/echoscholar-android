@@ -1,6 +1,7 @@
 package com.bibintomj.echoscholar.ui.dashboard
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -13,18 +14,56 @@ import java.util.Locale
 import java.util.concurrent.TimeUnit
 
 class SessionAdapter(
-    private val onSessionClick: (String) -> Unit // Updated to take session ID
+    private val onSessionClick: (String) -> Unit,
+    private val onSelectionChanged: (count: Int) -> Unit
 ) : ListAdapter<SessionItem, SessionAdapter.ViewHolder>(DiffCallback()) {
+
+    private val selectedIds = mutableSetOf<String>()
+    var selectionMode: Boolean = false
+        private set
+
+    fun startSelection(id: String) {
+        if (!selectionMode) selectionMode = true
+        toggleSelection(id)
+    }
+
+    fun toggleSelection(id: String) {
+        if (selectedIds.contains(id)) selectedIds.remove(id) else selectedIds.add(id)
+        onSelectionChanged(selectedIds.size)
+        currentList.indexOfFirst { it.id == id }.takeIf { it >= 0 }?.let { notifyItemChanged(it) }
+        if (selectedIds.isEmpty()) exitSelection()
+    }
+
+    fun exitSelection() {
+        selectionMode = false
+        selectedIds.clear()
+        notifyDataSetChanged()
+        onSelectionChanged(0)
+    }
+
+    fun getSelectedIds(): List<String> = selectedIds.toList()
 
     inner class ViewHolder(private val binding: ItemSessionBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(session: SessionItem) {
+            val isSelected = selectedIds.contains(session.id)
             binding.sessionTitle.text = session.title ?: "Untitled Session"
             binding.sessionTime.text = session.getTimeAgo()
 
+            binding.check.visibility = if (selectionMode) View.VISIBLE else View.GONE
+            binding.arrowIcon.visibility = if (selectionMode) View.INVISIBLE else View.VISIBLE
+            binding.check.isChecked = isSelected
+            binding.root.isActivated = isSelected
+
+            binding.root.setOnLongClickListener {
+                startSelection(session.id); true
+            }
+            binding.root.setOnClickListener {
+                if (selectionMode) toggleSelection(session.id) else onSessionClick(session.id)
+            }
             binding.playIcon.setOnClickListener {
-                onSessionClick(session.id) // Pass only session ID
+                if (selectionMode) toggleSelection(session.id) else onSessionClick(session.id)
             }
         }
     }

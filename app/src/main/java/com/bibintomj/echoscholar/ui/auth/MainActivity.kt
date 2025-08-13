@@ -91,8 +91,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.registerButton.setOnClickListener {
-            val email = binding.emailRegisterInput.text.toString().trim()
-            val password = binding.passwordRegisterInput.text.toString().trim()
+            val email = binding.registerEmailInput.text.toString().trim()
+            val password = binding.registerPasswordInput.text.toString().trim()
             val repeatPassword = binding.repeatpasswordInput.text.toString().trim()
 
             if (email.isNotEmpty() && password == repeatPassword) {

@@ -4,46 +4,92 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="12dp"
-    android:background="#2A2A2A">
+    android:layout_marginBottom="12dp"
+    android:background="@drawable/session_card_bg"
+    android:clipToOutline="true"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:paddingTop="12dp"
+    android:paddingBottom="12dp">
+
+    <!-- Play Icon -->
+    <ImageView
+        android:id="@+id/playIcon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/circle_white"
+        android:padding="8dp"
+        android:src="@drawable/ic_play"
+        android:contentDescription="Play session"
+        android:scaleType="centerInside"
+        app:tint="#000000"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 
     <!-- Session Title -->
     <TextView
         android:id="@+id/sessionTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Session Title"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp"
+        android:text="Testing. One, two, t"
+        android:textColor="@android:color/white"
+        android:textSize="15sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/playIcon"
-        android:layout_marginEnd="8dp"/>
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:fontFamily="@font/sf_pro_medium"
+        android:layout_marginStart="12dp"
+        app:layout_constraintTop_toTopOf="@+id/playIcon"
+        app:layout_constraintStart_toEndOf="@+id/playIcon"
+        app:layout_constraintEnd_toStartOf="@+id/arrowIcon" />
 
     <!-- Session Time -->
     <TextView
         android:id="@+id/sessionTime"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="5 minutes ago"
+        android:text="1 week ago"
         android:textColor="#AAAAAA"
-        android:textSize="14sp"
-        app:layout_constraintTop_toBottomOf="@id/sessionTitle"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/playIcon"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="4dp"/>
+        android:textSize="13sp"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:fontFamily="@font/sf_pro_regular"
+        android:layout_marginTop="2dp"
+        android:layout_marginStart="12dp"
+        app:layout_constraintTop_toBottomOf="@+id/sessionTitle"
+        app:layout_constraintStart_toEndOf="@+id/playIcon"
+        app:layout_constraintBottom_toBottomOf="@+id/playIcon"
+        app:layout_constraintEnd_toStartOf="@+id/arrowIcon" />
 
-    <!-- Play Icon -->
+    <!-- Arrow Icon -->
     <ImageView
-        android:id="@+id/playIcon"
+        android:id="@+id/arrowIcon"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@drawable/ic_chevron_right"
+        android:contentDescription="Open details"
+        app:tint="#888888"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- add inside your item layout root -->
+    <CheckBox
+        android:id="@+id/check"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:src="@drawable/ic_play"
+        android:visibility="gone"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:clickable="false"
+        android:padding="4dp"
+        android:layout_marginEnd="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
