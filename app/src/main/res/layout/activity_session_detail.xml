@@ -7,14 +7,14 @@
     android:background="#1A1A1A"
     android:padding="16dp">
 
-    <!-- Scrollable Content -->
+    <!-- Scrollable Section -->
     <ScrollView
         android:id="@+id/scrollContainer"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fillViewport="true"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/audioBar"
+        app:layout_constraintBottom_toTopOf="@id/fixedBottomBar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- Header Bar -->
+            <!-- Top Bar -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -31,207 +31,320 @@
                 android:gravity="center_vertical"
                 android:layout_marginBottom="16dp">
 
-                <ImageButton
+                <ImageView
                     android:id="@+id/backButton"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:background="@android:color/transparent"
-                    android:src="@android:drawable/ic_media_previous"
-                    android:tint="#FFFFFF" />
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_chevron_left"
+                    app:tint="#D0FF00" />
 
                 <TextView
                     android:id="@+id/sessionTitle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="JavaScript Lecture"
+                    android:padding="20dp"
+                    android:text="Testing. O"
                     android:textColor="#FFFFFF"
-                    android:textSize="20sp"
-                    android:gravity="center"
-                    android:textStyle="bold" />
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:gravity="center" />
 
-                <ImageButton
-                    android:id="@+id/downloadButton"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:background="@android:color/transparent"
-                    android:src="@android:drawable/stat_sys_download"
-                    android:tint="#FFFFFF" />
-
-                <ImageButton
-                    android:id="@+id/shareButton"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:background="@android:color/transparent"
-                    android:src="@android:drawable/ic_menu_share"
-                    android:tint="#FFFFFF" />
+                <ImageView
+                    android:id="@+id/chatButton"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_sparkles"
+                    app:tint="#FFD700" />
             </LinearLayout>
 
-            <!-- Transcription -->
+            <!-- Transcription Card -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                app:cardCornerRadius="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp"
                 app:cardBackgroundColor="#2A2A2A">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
+                    android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Transcription"
-                        android:textColor="#AAAAAA"
-                        android:textSize="14sp" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:background="#1E1E1E"
+                        android:paddingHorizontal="16dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Transcription"
+                            android:textColor="#CCCCCC"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginEnd="12dp"
+                            android:src="@drawable/ic_copy"
+                            app:tint="#AAAAAA" />
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_download"
+                            app:tint="#AAAAAA" />
+                    </LinearLayout>
 
                     <TextView
                         android:id="@+id/transcriptionText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:padding="16dp"
+                        android:text="Testing. One, two, three.\nCheck,\nthis is the best.\nTwo, three.\nAlright."
                         android:textColor="#FFFFFF"
-                        android:textSize="16sp"
-                        android:layout_marginTop="8dp" />
+                        android:textSize="14sp" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- Translation -->
+            <!-- Translation Card -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                app:cardCornerRadius="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp"
                 app:cardBackgroundColor="#2A2A2A">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
+                    android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Translation"
-                        android:textColor="#AAAAAA"
-                        android:textSize="14sp" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:background="#1E1E1E"
+                        android:paddingHorizontal="16dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Translation"
+                            android:textColor="#CCCCCC"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginEnd="12dp"
+                            android:src="@drawable/ic_copy"
+                            app:tint="#AAAAAA" />
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_download"
+                            app:tint="#AAAAAA" />
+                    </LinearLayout>
 
                     <TextView
                         android:id="@+id/translationText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:padding="16dp"
+                        android:text="Translated text appears here."
                         android:textColor="#FFFFFF"
-                        android:textSize="16sp"
-                        android:layout_marginTop="8dp" />
+                        android:textSize="14sp" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- Summary (Optional) -->
+            <!-- Summary Card -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                app:cardCornerRadius="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp"
                 app:cardBackgroundColor="#2A2A2A">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
+                    android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Summary"
-                        android:textColor="#AAAAAA"
-                        android:textSize="14sp" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:background="#1E1E1E"
+                        android:paddingHorizontal="16dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Summary"
+                            android:textColor="#CCCCCC"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginEnd="12dp"
+                            android:src="@drawable/ic_copy"
+                            app:tint="#AAAAAA" />
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_download"
+                            app:tint="#AAAAAA" />
+                    </LinearLayout>
 
                     <TextView
                         android:id="@+id/summaryText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:padding="16dp"
+                        android:text="Summary content goes here"
                         android:textColor="#FFFFFF"
-                        android:textSize="16sp"
-                        android:layout_marginTop="8dp" />
+                        android:textSize="14sp" />
+
                 </LinearLayout>
+
             </androidx.cardview.widget.CardView>
-            <Button
-                android:id="@+id/generateMomButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Generate MoM"
-                android:layout_marginTop="16dp" />
+
             <TextView
                 android:id="@+id/momText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Minutes of Meeting will appear here."
                 android:paddingTop="8dp"
+                android:text="Minutes of Meeting will appear here."
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
         </LinearLayout>
     </ScrollView>
 
-    <!-- Audio Bar (Fixed Bottom) -->
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/audioBar"
+    <!-- Fixed Bottom Bar: Audio Player + MoM Button -->
+    <LinearLayout
+        android:id="@+id/fixedBottomBar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:orientation="vertical"
+        android:background="#1A1A1A"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:paddingVertical="8dp">
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <ImageButton
-            android:id="@+id/playAudioButton"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="8dp"
-            android:background="@android:color/transparent"
-            android:src="@android:drawable/ic_media_play"
-            android:tint="#D0FF00"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+        <!-- Audio Bar -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="124dp"
+            android:layout_marginBottom="8dp"
+            android:padding="12dp">
 
-        <TextView
-            android:id="@+id/currentTime"
-            android:layout_width="wrap_content"
+            <!-- Play Button -->
+            <ImageView
+                android:id="@+id/playAudioButton"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:contentDescription="Play"
+                android:src="@drawable/ic_play"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="#08A569" />
+
+            <!-- Start Time -->
+
+            <!-- SeekBar -->
+
+            <TextView
+                android:id="@+id/currentTime"
+                android:layout_width="36dp"
+                android:layout_height="29dp"
+                android:layout_marginStart="8dp"
+                android:text="0:00"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/playIcon"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1.0" />
+
+            <SeekBar
+                android:id="@+id/audioSeekBar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:progressTint="#555555"
+                android:thumbTint="#FFFFFF"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/totalTime"
+                app:layout_constraintStart_toEndOf="@id/currentTime"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- End Time -->
+            <TextView
+                android:id="@+id/totalTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:text="0:00"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.827" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <!-- MoM Button -->
+        <LinearLayout
+            android:id="@+id/generateMomButton"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="0:00"
-            android:textColor="#AAAAAA"
-            android:layout_marginStart="8dp"
-            app:layout_constraintStart_toEndOf="@id/playAudioButton"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            android:layout_marginBottom="12dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            app:background="@android:color/transparent"
+            android:padding="12dp"
+            android:backgroundTint="@android:color/transparent"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="@drawable/outlined_button_background">
 
-        <SeekBar
-            android:id="@+id/audioSeekBar"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
-            app:layout_constraintStart_toEndOf="@id/currentTime"
-            app:layout_constraintEnd_toStartOf="@id/totalTime"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_notes"
+                app:tint="#FFFFFF"
+                android:layout_marginEnd="8dp" />
 
-        <TextView
-            android:id="@+id/totalTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0:00"
-            android:textColor="#AAAAAA"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Get Minute of Meeting"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:textSize="14sp" />
+        </LinearLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

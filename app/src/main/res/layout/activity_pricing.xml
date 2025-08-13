@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="#0D0D0D">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <!-- Current Plan -->
+        <TextView
+            android:id="@+id/tvPlanStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Free Tier"
+            android:textColor="#FFD700"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_gravity="center" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="You are currently on the Free plan. Upgrade to Pro to unlock AI-powered features!"
+            android:textColor="#FFD700"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:paddingTop="4dp"
+            android:paddingBottom="16dp" />
+
+        <!-- Choose Plan Header -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Choose Your Plan"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_gravity="center" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Start for free. Upgrade to Pro anytime to unlock AI-powered learning features!"
+            android:textColor="#B3FFFFFF"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:paddingTop="4dp"
+            android:paddingBottom="16dp" />
+
+        <!-- Free Plan Card -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:layout_marginBottom="20dp"
+            android:clipToOutline="true"
+            android:background="@drawable/rounded_card_dark"
+            android:elevation="4dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Free"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Free"
+                android:textColor="#FFFFFF"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                android:paddingTop="8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Perfect to try out EchoScholar"
+                android:textColor="#B3FFFFFF"
+                android:textSize="14sp"
+                android:paddingBottom="12dp" />
+
+            <!-- Feature list -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="✓ Real-time transcription"
+                android:textColor="#00FF7F"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="✓ Live translation"
+                android:textColor="#00FF7F"
+                android:textSize="14sp"
+                android:paddingTop="4dp" />
+
+            <TextView
+                android:id="@+id/tvFreeAiAsk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="✗ AI Ask feature"
+                android:textColor="#555555"
+                android:textSize="14sp"
+                android:paddingTop="4dp" />
+
+            <Button
+                android:id="@+id/btnFree"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Current Plan"
+                android:backgroundTint="#333333"
+                android:textColor="#B3FFFFFF"
+                android:layout_marginTop="12dp"
+                android:enabled="false" />
+        </LinearLayout>
+
+        <!-- Pro Plan Card -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:clipToOutline="true"
+            android:background="@drawable/rounded_card_dark">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pro"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="$15.99"
+                android:textColor="#FFFFFF"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                android:paddingTop="8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CAD / one-time"
+                android:textColor="#B3FFFFFF"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Unlock all features. One-time purchase."
+                android:textColor="#B3FFFFFF"
+                android:textSize="14sp"
+                android:paddingTop="8dp"
+                android:paddingBottom="12dp" />
+
+            <!-- Feature list -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="✓ Real-time transcription"
+                android:textColor="#00FF7F"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="✓ Live translation"
+                android:textColor="#00FF7F"
+                android:textSize="14sp"
+                android:paddingTop="4dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="✓ AI Ask feature"
+                android:textColor="#00FF7F"
+                android:textSize="14sp"
+                android:paddingTop="4dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnPro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Get Pro"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:backgroundTint="@color/pricing_neon_yellow"
+                android:layout_marginTop="12dp"
+                app:icon="@drawable/ic_lock"
+                app:iconTint="#000000"
+                app:iconGravity="textStart"
+                app:iconPadding="8dp" />
+        </LinearLayout>
+
+        <!-- Loader -->
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:visibility="gone" />
+
+    </LinearLayout>
+</ScrollView>

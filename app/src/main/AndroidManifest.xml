@@ -13,11 +13,21 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/logo"
         android:label="@string/app_name"
-
         android:supportsRtl="true"
         android:theme="@style/Theme.Echoscholarandroid"
         tools:targetApi="31">
-<!--android:roundIcon="@mipmap/logo"-->
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+        <!--android:roundIcon="@mipmap/logo"-->
         <activity
             android:name=".ui.splash.SplashActivity"
             android:exported="true">
@@ -33,7 +43,12 @@
         <activity android:name=".ui.dashboard.NewSessionActivity" />
 
         <activity android:name=".ui.sessiondetail.SessionDetailActivity" />
-
+        <activity android:name=".ui.chat.ChatActivity" />
+        <activity
+            android:name=".ui.payments.PricingActivity"
+            android:exported="false"
+            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".ui.auth.MainActivity"
             android:exported="true"
